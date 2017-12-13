@@ -13,8 +13,8 @@ require("../../../lib/history.js").setDummyTimestampFunction();
 exports.testCreatePersistentFlatProcess = function(test) {
     var bpmnProcess;
 
-    var persistencyUri = path.join(__dirname, '../../resources/persistency/testPersistentProcess');
-    fileUtils.cleanDirectorySync(persistencyUri);
+    var persistencyURL = path.join(__dirname, '../../resources/persistency/testPersistentProcess');
+    fileUtils.cleanDirectorySync(persistencyURL);
 
     var savedState = function(error, savedData) {
         test.ok(error === null, "testCreatePersistentFlatProcess: no error saving.");
@@ -95,11 +95,10 @@ exports.testCreatePersistentFlatProcess = function(test) {
     var fileName = path.join(__dirname, "../../resources/projects/simple/taskExampleProcess.bpmn");
 
     var persistencyOptions = {
-        uri: persistencyUri,
         doneSaving: savedState
     };
 
-    var manager = new Manager({
+    var manager = new Manager(persistencyURL, {
         bpmnFilePath: fileName,
         persistencyOptions: persistencyOptions
     });
@@ -116,17 +115,12 @@ exports.testCreatePersistentFlatProcess = function(test) {
 
 exports.testLoadPersistentFlatProcess = function(test){
 
-    var persistencyUri = path.join(__dirname, '../../resources/persistency/testPersistentProcess');
+    var persistencyURL = path.join(__dirname, '../../resources/persistency/testPersistentProcess');
 
     var fileName = path.join(__dirname, "../../resources/projects/simple/taskExampleProcess.bpmn");
 
-    var persistencyOptions = {
-        uri: persistencyUri
-    };
-
-    var manager = new Manager({
-        bpmnFilePath: fileName,
-        persistencyOptions: persistencyOptions
+    var manager = new Manager(persistencyURL, {
+        bpmnFilePath: fileName
     });
 
 
